@@ -24,4 +24,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   }
 });
 
-
+// Remove the URL from tabUrls when the tab is closed
+chrome.tabs.onRemoved.addListener(function (tabId, removeInfo) {
+  chrome.tabs.get(tabId, function (tab) {
+    if (tab && tab.url) {
+      delete tabUrls[tab.url];
+    }
+  });
+});
